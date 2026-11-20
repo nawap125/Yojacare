@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="YOJA Care">
+<link rel="apple-touch-icon" href="./assets/icon-192.png"><link rel="icon" type="image/svg+xml" href="./assets/yoja-mark.svg"><title>YOJA Care</title>
+<meta name="description" content="A private, personal skin-care journal for photos, routines, products, and progress.">
+<meta name="theme-color" content="#fffaf0">
+<link rel="manifest" href="./manifest.webmanifest">
+<style>
+:root{--bg:#fffaf0;--card:#fffef9;--tx:#382f20;--mu:#85765c;--ac:#b87918;--on:#fffef9;--ln:#eee2c8;--bad:#b4506f;--mid:#e0a526;--good:#68864b;--gold:#e3a72f;--soft:#fff0c7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1b14;--card:#29251a;--tx:#f8f0dc;--mu:#c8b98f;--ac:#e6b84c;--on:#211c10;--ln:#49402a;--bad:#e59b8a;--mid:#f2c65e;--good:#e6b84c;--gold:#f2c65e;--soft:#39301c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d1b14;--card:#29251a;--tx:#f8f0dc;--mu:#c8b98f;--ac:#e6b84c;--on:#211c10;--ln:#49402a;--bad:#e59b8a;--mid:#f2c65e;--good:#e6b84c;--gold:#f2c65e;--soft:#39301c;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 ui-rounded,-apple-system,"SF Pro Rounded","Segoe UI",sans-serif}
+main{max-width:520px;margin:0 auto;padding:18px 16px 110px}
+h1{font-size:28px;margin:6px 0 14px;letter-spacing:-.02em}
+h2{font-size:15px;margin:22px 0 8px}
+h2 small,.sm{font-weight:400;color:var(--mu);font-size:13px}
+.mu{color:var(--mu)}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.photo{width:100%;aspect-ratio:4/3;border-radius:22px;background:var(--card);border:2px dashed var(--ln);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:40px;overflow:hidden;padding:0}
+.photo span{font-size:15px;color:var(--mu)}
+.photo img{width:100%;height:100%;object-fit:cover}
+.row{display:flex;gap:10px}
+.sk{flex:1;font-size:30px;padding:10px 0;border-radius:16px;background:var(--card);border:2px solid var(--ln)}
+.sk.on{border-color:var(--ac)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:12px 16px;border-radius:999px;background:var(--card);border:2px solid var(--ln);display:flex;gap:8px;align-items:center}
+.chip small{font-size:12px;opacity:.85}
+.chip.on{background:var(--ac);border-color:var(--ac);color:var(--on)}
+.go{width:100%;margin-top:24px;padding:16px;border-radius:18px;background:var(--ac);color:var(--on);font-weight:700;font-size:17px}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--ln);padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;padding:8px 0;color:var(--mu);font-size:13px;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button b{font-size:22px;font-weight:400}
+nav button.on{color:var(--ac);font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--card);border-radius:16px;padding:12px;text-align:center}
+.stat b{display:block;font-size:26px}
+.stat span{font-size:12px;color:var(--mu)}
+.dots{display:flex;gap:6px;justify-content:space-between}
+.dots i{flex:1;height:26px;border-radius:8px;background:var(--ln)}
+.dots i.on{background:var(--good)}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+figure{margin:0}
+figure img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px;display:block}
+figcaption{font-size:13px;color:var(--mu);margin-top:4px}
+.bars{display:flex;align-items:flex-end;gap:5px;height:90px;background:var(--card);border-radius:16px;padding:10px}
+.bars b{flex:1;border-radius:5px}
+.s1{background:var(--good)}.s2{background:var(--mid)}.s3{background:var(--bad)}
+.ur{display:grid;grid-template-columns:110px 1fr 28px;gap:8px;align-items:center;margin:6px 0;font-size:14px}
+.ur div{background:var(--ln);border-radius:6px;height:10px}
+.ur div b{display:block;height:100%;background:var(--ac);border-radius:6px}
+.ur em{font-style:normal;color:var(--mu);text-align:right}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.th{position:relative;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:var(--card);padding:0;display:flex;align-items:center;justify-content:center;font-size:28px}
+.th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.th small{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:2px 0}
+.add{display:flex;gap:8px}
+.add input{flex:1;font:inherit;padding:12px 14px;border-radius:14px;border:2px solid var(--ln);background:var(--card);color:var(--tx);min-width:0}
+.add button{padding:0 18px;border-radius:14px;background:var(--ac);color:var(--on);font-weight:700}
+.pl{display:flex;justify-content:space-between;align-items:center;background:var(--card);border-radius:14px;padding:12px 14px;margin:8px 0}
+.pl button{color:var(--bad);font-size:14px}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:20px;z-index:5}
+#ov.show{display:flex}
+#ov div{background:var(--card);border-radius:20px;padding:14px;max-width:420px;width:100%;max-height:100%;overflow:auto}
+#ov img{width:100%;border-radius:14px}
+#ov .r{display:flex;gap:10px;margin-top:12px}
+#ov .r button{flex:1;padding:12px;border-radius:12px;background:var(--ln)}
+#ov .r .d{color:var(--bad)}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:6}
+#toast.show{opacity:1}
+.lnk{color:var(--ac);font-size:14px;padding:10px 12px 10px 0}.sk.t{font-size:16px}.pc{background:var(--card);border-radius:14px;padding:12px 14px;margin:8px 0;display:grid;grid-template-columns:1fr auto;gap:2px 10px}.pc div{grid-row:1/3;grid-column:2;align-self:center;font-weight:700}#ov .r{flex-wrap:wrap}#nt{width:100%;font:inherit;padding:12px 14px;border-radius:14px;border:2px solid var(--ln);background:var(--card);color:var(--tx);resize:vertical}.pl.nt{display:block;line-height:1.5}.bk{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card);border-radius:14px;padding:12px 14px;margin-bottom:14px;font-size:14px}.bk.warn{border:2px solid var(--mid)}.bk button{background:var(--ac);color:var(--on);padding:10px 14px;border-radius:12px;font-weight:700;white-space:nowrap}.pl .m{color:var(--ac);margin-right:10px}.vs{background:var(--card);border-radius:18px;padding:16px;margin-bottom:14px;border-left:4px solid var(--ac)}.vt{font-size:17px;line-height:1.45;font-family:Georgia,'Times New Roman',serif}.vr{color:var(--mu);font-size:13px;margin-top:6px}.qt{margin-top:10px;padding-top:10px;border-top:1px solid var(--ln);font-size:14px;color:var(--mu)}.rec{display:block;width:100%;text-align:center;padding:14px;border-radius:14px;border:2px solid var(--ac);color:var(--ac);font-weight:700;margin:0 0 14px}.rec small{display:block;font-weight:400;color:var(--mu);font-size:12px;margin-top:2px}#ah{position:fixed;inset:0;z-index:20;background:var(--bg);overflow:auto;padding:calc(env(safe-area-inset-top,0px) + 28px) 20px calc(env(safe-area-inset-bottom,0px) + 28px);display:none}
+#ah.show{display:block}
+#ah .in{max-width:420px;margin:0 auto;text-align:center}
+#ah img.lg{width:96px;height:96px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+#ah h2{font-size:26px;margin:16px 0 6px}
+#ah p{margin:6px 0;color:var(--mu)}
+#ah ol{text-align:left;background:var(--card);border-radius:16px;padding:14px 16px 14px 36px;margin:18px 0;line-height:1.8;transition:box-shadow .2s}
+#ah ol.hl{box-shadow:0 0 0 3px var(--ac)}
+#ah .note{background:var(--card);border-radius:12px;padding:10px 12px;font-size:14px;display:none;margin-top:10px}
+#ah .go{margin-top:6px}
+
+html,body{font:16px/1.45 "Avenir Next","Avenir","SF Pro Text",-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+h1{font-family:"Iowan Old Style","Palatino","Georgia",serif;font-weight:600;font-size:32px;letter-spacing:-.01em;margin:8px 0 16px}
+h2{font-size:14px;font-weight:700;letter-spacing:.01em;color:var(--tx);margin:26px 0 10px}
+body{background:radial-gradient(120% 60% at 50% -10%,var(--soft),var(--bg) 60%) no-repeat,var(--bg)}
+.photo,.sk,.chip,.stat,.pl,.pc,.bk,.vs,.bars,.add input,#nt{border-color:var(--ln);box-shadow:0 1px 2px rgba(60,30,110,.06),0 6px 18px -10px rgba(60,30,110,.25)}
+.photo{border-radius:26px;border:2px dashed var(--ln);background:linear-gradient(160deg,var(--card),var(--soft))}
+.sk{border-radius:18px}.sk.on{border-color:var(--ac);background:var(--soft)}
+.chip.on{background:var(--ac);border-color:var(--ac);box-shadow:0 6px 16px -8px var(--ac)}
+.go{background:linear-gradient(135deg,var(--ac),#b87918);border-radius:20px;box-shadow:0 10px 24px -12px var(--ac);letter-spacing:.01em}
+@media (prefers-color-scheme:dark){.go{background:linear-gradient(135deg,#e6b84c,#d89b28)}}
+nav{background:color-mix(in srgb,var(--card) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--ln)}
+nav button.on{color:var(--ac)}
+nav button.on b{filter:none;transform:translateY(-1px)}
+.stat b{font-family:"Iowan Old Style","Palatino","Georgia",serif;font-weight:600;font-size:30px;color:var(--ac)}
+.dots i.on{background:var(--gold)}
+.vs{border-left:0;background:linear-gradient(150deg,var(--card),var(--soft));border:1px solid var(--ln);position:relative;overflow:hidden;padding:18px 18px 12px}
+.vs::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--gold)}
+.vt{font-size:18px;line-height:1.5;color:var(--tx)}
+.vr{color:var(--ac);font-weight:700;font-size:13px;margin-top:8px}
+.qt{border-top:1px solid var(--ln)}
+.bk{border-radius:16px}.bk button,.add button{background:var(--ac)}
+.rec{border-color:var(--ac);border-radius:16px;background:transparent}
+.bars b.s1{background:var(--ac)}.bars b.s2{background:var(--gold)}.bars b.s3{background:var(--bad)}
+.ur div b{background:linear-gradient(90deg,var(--ac),#d39a2b)}
+.th small{background:linear-gradient(transparent,rgba(30,10,60,.7));padding:10px 0 3px}
+#ov{background:rgba(24,10,48,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#ah{background:radial-gradient(120% 60% at 50% -10%,var(--soft),var(--bg) 65%) no-repeat,var(--bg)}
+#ah img.lg{border-radius:26px;box-shadow:0 14px 30px -12px rgba(60,30,110,.55)}
+#ah h2{font-family:"Iowan Old Style","Palatino","Georgia",serif;font-weight:600;font-size:28px;color:var(--tx)}
+#ah ol.hl{box-shadow:0 0 0 3px var(--gold)}
+.brand{display:flex;align-items:center;gap:10px;margin:2px 0 4px}
+.brand img{width:30px;height:30px;border-radius:9px}
+.brand span{font-size:13px;color:var(--mu);font-weight:600}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<div id="ah"><div class="in">
+<img class="lg" src="./assets/yoja-mark.svg" alt="YOJA Care icon">
+<h2>Add YOJA Care to your Home Screen</h2>
+<p>Do this first, so your photos and progress stay with the app icon.</p>
+<ol id="ah-steps"><li>Tap the <b>Share</b> button (the square with the arrow) in Safari.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>, then open YOJA Care from your Home Screen.</li></ol>
+<button class="go" id="ah-add">Add to Home Screen</button>
+<p class="sm">This opens your Share menu. Choose Add to Home Screen there.</p>
+<div class="note" id="ah-app">This looks like an in-app browser. Tap the menu (…) or the compass icon and choose <b>Open in Safari</b> first.</div>
+<div class="note" id="ah-dt">For the best result, open this link on your iPhone in Safari.</div>
+<button class="lnk" id="ah-skip">Continue in the browser for now</button>
+</div></div>
+<main id="v"></main>
+<nav>
+<button data-a="tab" data-i="log"><b>📷</b>Log</button>
+<button data-a="tab" data-i="dash"><b>📈</b>Progress</button>
+<button data-a="tab" data-i="prod"><b>🧴</b>Products</button>
+</nav>
+<input type="file" id="f" accept="image/*" capture="user" hidden><input type="file" id="f2" accept="image/*" hidden><input type="file" id="imp" accept=".json,application/json" hidden>
+<div id="ov"><div id="ovc"></div></div>
+<div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const AMT=['Light','Normal','Extra'],SK=['','😊','😐','😣'];
+const dk=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const fd=d=>new Date(d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'});
+let P=[],E=[],mem=[],tab='log',sel={},photo=null,skin=0,note='',cur={d:dk(new Date()),slot:new Date().getHours()<15?'AM':'PM'};
+try{P=JSON.parse(localStorage.getItem('sl_p')||'[]')||[]}catch(e){}
+const saveP=()=>{try{localStorage.setItem('sl_p',JSON.stringify(P))}catch(e){}};
+let X=[];try{X=JSON.parse(localStorage.getItem('sl_x')||'[]')||[]}catch(e){}
+const saveX=()=>{try{localStorage.setItem('sl_x',JSON.stringify(X))}catch(e){}};
+const lastBk=()=>{try{return +localStorage.getItem('sl_bk')||0}catch(e){return 0}};
+const setBk=()=>{try{localStorage.setItem('sl_bk',String(Date.now()))}catch(e){}};
+const db=new Promise(res=>{try{const r=indexedDB.open('skinlog',1);r.onupgradeneeded=()=>r.result.createObjectStore('e',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>res(null)}catch(e){res(null)}});
+async function all(){const d=await db;if(!d)return mem.slice();return new Promise(r=>{try{const q=d.transaction('e').objectStore('e').getAll();q.onsuccess=()=>r(q.result);q.onerror=()=>r([])}catch(e){r([])}})}
+async function put(x){const d=await db;if(!d){mem=mem.filter(m=>m.id!==x.id);mem.push(x);return}return new Promise(r=>{try{const t=d.transaction('e','readwrite');t.objectStore('e').put(x);t.oncomplete=r;t.onerror=r}catch(e){mem.push(x);r()}})}
+async function del(id){const d=await db;if(!d){mem=mem.filter(x=>x.id!==id);return}return new Promise(r=>{try{const t=d.transaction('e','readwrite');t.objectStore('e').delete(id);t.oncomplete=r;t.onerror=r}catch(e){r()}})}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function loadCur(){const x=E.find(e=>e.d===cur.d&&e.slot===cur.slot);photo=x?x.p:null;skin=x?x.s:0;note=x&&x.nt?x.nt:'';sel={};if(x)(x.u||[]).forEach(u=>{const p=P.find(q=>q.n===u.n);if(p)sel[p.id]=Math.max(0,AMT.indexOf(u.a))})}
+async function load(){E=(await all()).sort((a,b)=>a.t-b.t);E.forEach(e=>{e.d=e.d||dk(new Date(e.t));e.slot=e.slot||'AM'});loadCur();draw()}
+function draw(){document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.i===tab));$('#v').innerHTML='<div class="brand"><img src="'+document.querySelector('link[rel=icon]').href+'" alt=""><span>YOJA Care</span></div>'+(tab==='log'?vLog():tab==='prod'?vProd():vDash());scrollTo(0,0)}
+function vLog(){
+const isT=cur.d===dk(new Date()),ex=E.find(e=>e.d===cur.d&&e.slot===cur.slot);
+const chips=P.length?P.map(p=>{const a=sel[p.id];return `<button class="chip ${a!==undefined?'on':''}" data-a="chip" data-i="${p.id}">${esc(p.n)}${a!==undefined?`<small>${AMT[a]}</small>`:''}</button>`}).join(''):`<p class="mu">No products yet. Add them once in the Products tab.</p>`;
+return `<h1>${isT?'Today':fd(cur.d)}</h1>${isT?verseCard():''}${isT?'':'<button class="lnk" data-a="today">Back to today</button>'}
+<div class="row"><button class="sk t ${cur.slot==='AM'?'on':''}" data-a="slot" data-i="AM">☀️ Morning</button><button class="sk t ${cur.slot==='PM'?'on':''}" data-a="slot" data-i="PM">🌙 Night</button></div>
+${ex?'<p class="mu sm">Already saved. Saving again updates it.</p>':''}
+<h2></h2><button class="photo" data-a="pick">${photo?`<img src="${photo}" alt="Photo">`:'📷<span>Take photo</span>'}</button>
+<button class="lnk" data-a="pick">${photo?'Retake photo':'Take photo'}</button><button class="lnk" data-a="lib">${photo?'Pick a new one from library':'Choose from library'}</button>${photo?'<button class="lnk" data-a="nophoto">Remove photo</button>':''}
+<h2>How is your skin?</h2><div class="row">${[1,2,3].map(i=>`<button class="sk ${skin===i?'on':''}" data-a="skin" data-i="${i}">${SK[i]}</button>`).join('')}</div>
+<h2>Products used <small>Tap again to change the amount</small></h2><div class="chips">${chips}</div>
+<h2>Notes</h2><textarea id="nt" rows="3" maxlength="500" placeholder="Anything new, how it feels, any reaction">${esc(note)}</textarea><button class="go" data-a="save">${ex?'Update':'Save'} ${cur.slot==='AM'?'morning':'night'}</button>`}
+function vProd(){
+const q=['Cleanser','Moisturizer','Sunscreen','Serum','Toner'].filter(n=>!P.some(p=>p.n===n));
+return `<h1>Products</h1><div class="add"><input id="pn" placeholder="Product name" maxlength="40" autocomplete="off"><button data-a="add">Add</button></div>
+${q.length?`<h2>Quick add</h2><div class="chips">${q.map(n=>`<button class="chip" data-a="quick" data-i="${n}">+ ${n}</button>`).join('')}</div>`:''}
+<h2>Your products</h2>${P.length?P.map(p=>`<div class="pl"><span>${esc(p.n)}</span><button data-a="rm" data-i="${p.id}">Remove</button></div>`).join(''):'<p class="mu">Nothing yet. Add each product once, then tap it on the Log tab.</p>'}
+<h2>Trying new <small>Products or methods she is testing</small></h2><div class="add"><input id="xn" placeholder="New product or method" maxlength="60" autocomplete="off"><button data-a="xadd">Add</button></div>${X.length?X.slice().reverse().map(x=>`<div class="pl"><span><b>${esc(x.n)}</b><br><small class="mu">Started ${fd(x.st)}, ${x.s}</small></span><span><button class="m" data-a="xst" data-i="${x.id}">Mark ${({Trying:'Keeping',Keeping:'Dropped',Dropped:'Trying'})[x.s]||'Trying'}</button><button data-a="xrm" data-i="${x.id}">Remove</button></span></div>`).join(''):'<p class="mu sm">Nothing yet. Add each new product or method when she starts it.</p>'}
+<h2>Backup <small>Save a copy to Files or Google Drive</small></h2><div class="chips"><button class="chip" data-a="bak">Back up everything</button><button class="chip" data-a="txt">Save notes as text</button><button class="chip" data-a="pics">Save photos</button><button class="chip" data-a="csv">Export for Sheets</button><button class="chip" data-a="imp">Restore backup</button></div>
+<p class="mu sm">Add YOJA Care to your Home Screen for an app-like experience. Back up your entries regularly to keep a separate copy.</p>`}
+const V=[['Psalm 139:14','I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.'],['Proverbs 31:25','Strength and honour are her clothing; and she shall rejoice in time to come.'],['Psalm 46:5','God is in the midst of her; she shall not be moved: God shall help her, and that right early.'],['Isaiah 41:10','Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness.'],['Philippians 4:13','I can do all things through Christ which strengtheneth me.'],['Psalm 118:24','This is the day which the LORD hath made; we will rejoice and be glad in it.'],['Lamentations 3:22-23','It is of the LORD’s mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.'],['Proverbs 3:5-6','Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths.'],['Joshua 1:9','Have not I commanded thee? Be strong and of a good courage; be not afraid, neither be thou dismayed: for the LORD thy God is with thee whithersoever thou goest.'],['Psalm 27:1','The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?'],['Philippians 4:6-7','Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.'],['Psalm 34:5','They looked unto him, and were lightened: and their faces were not ashamed.'],['Zephaniah 3:17','The LORD thy God in the midst of thee is mighty; he will save, he will rejoice over thee with joy; he will rest in his love, he will joy over thee with singing.'],['Psalm 28:7','The LORD is my strength and my shield; my heart trusted in him, and I am helped: therefore my heart greatly rejoiceth; and with my song will I praise him.'],['Isaiah 40:31','But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint.'],['Romans 8:28','And we know that all things work together for good to them that love God, to them who are the called according to his purpose.'],['Psalm 23:1-3','The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul: he leadeth me in the paths of righteousness for his name’s sake.'],['Matthew 11:28','Come unto me, all ye that labour and are heavy laden, and I will give you rest.'],['Psalm 30:5','For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning.'],['Jeremiah 29:11','For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end.'],['2 Timothy 1:7','For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind.'],['Psalm 121:1-2','I will lift up mine eyes unto the hills, from whence cometh my help. My help cometh from the LORD, which made heaven and earth.'],['Psalm 37:4','Delight thyself also in the LORD; and he shall give thee the desires of thine heart.'],['Galatians 6:9','And let us not be weary in well doing: for in due season we shall reap, if we faint not.'],['Psalm 90:17','And let the beauty of the LORD our God be upon us: and establish thou the work of our hands upon us; yea, the work of our hands establish thou it.'],['Philippians 1:6','Being confident of this very thing, that he which hath begun a good work in you will perform it until the day of Jesus Christ.']];
+const Q=['Small steps every day add up to big changes.','Be patient with your skin and with yourself.','Taking care of yourself is not vain. It is kind.','Progress is quiet. Keep showing up.','You do not have to be perfect to glow.','Consistency beats intensity.','One good routine today is a gift to tomorrow.','Your skin tells a story. Be gentle with the next chapter.','Rest is part of the routine.','Healing takes time, and you are doing the work.','Today is a fresh page.','Choose gentle.','Look how far you have come since day one.','Drink water, sleep well, and smile. That is glow from the inside out.','You are allowed to take it slow.','A calm mind is part of good skin.','Celebrate the small wins.','You are more than your skin.','Do your routine, then do something kind for someone.','Every day you show up, you invest in yourself.','Hard skin days pass. You stay.','Gratitude looks good on everyone.','Be proud of the effort, not only the result.','Trust the process and give it time.'];
+let vo=0;
+const dn=()=>Math.floor(new Date(dk(new Date())+'T12:00:00')/864e5);
+function verseCard(){const n=dn()+vo,v=V[n%V.length],q=Q[(n*5+3)%Q.length];
+return `<div class="vs"><div class="vt">“${v[1]}”</div><div class="vr">${v[0]} (KJV)</div><div class="qt">${q}</div><button class="lnk" data-a="vnext">Another verse</button></div>`}
+function recCard(){return `<button class="rec" data-a="imp">Recover previous progress<small>Choose your saved backup file from Files or Google Drive</small></button>`}
+function bkCard(){const t=lastBk(),n=t?Math.floor((Date.now()-t)/864e5):null,old=n===null||n>=3;
+return `<div class="bk ${old?'warn':''}"><div>${old?(t?'Last backup was '+n+' days ago.':'No backup yet.'):'Backed up '+(n?n+' days ago':'today')+'.'}</div><button data-a="bak">Back up to Drive</button></div>`}
+function vDash(){
+if(!E.length)return `<h1>Progress</h1><p class="mu">Save your first entry on the Log tab and your progress shows up here.</p>${recCard()}`;
+const days=new Set(E.map(e=>e.d));
+let st=0,d=new Date();if(!days.has(dk(d)))d.setDate(d.getDate()-1);
+while(days.has(dk(d))){st++;d.setDate(d.getDate()-1)}
+let m30=0;for(let i=0;i<30;i++){const x=new Date();x.setDate(x.getDate()-i);if(days.has(dk(x)))m30++}
+const dots=[];for(let i=13;i>=0;i--){const x=new Date();x.setDate(x.getDate()-i);dots.push(`<i class="${days.has(dk(x))?'on':''}"></i>`)}
+const ph=E.filter(e=>e.p),f=ph[0],l=ph[ph.length-1];
+const ba=ph.length>1?`<div class="ba"><figure><img src="${f.p}" alt="First photo"><figcaption>Day 1, ${fd(f.d)}</figcaption></figure><figure><img src="${l.p}" alt="Latest photo"><figcaption>Now, ${fd(l.d)}</figcaption></figure></div>`:'<p class="mu">Take two photos to see your before and after.</p>';
+const r=E.filter(e=>e.s).slice(-14);
+const bars=r.length?`<div class="bars">${r.map(e=>`<b class="s${e.s}" style="height:${e.s===1?100:e.s===2?60:25}%"></b>`).join('')}</div><div class="sm">Taller bars are better skin days.</div>`:'';
+const first={};E.forEach(e=>(e.u||[]).forEach(u=>{if(!first[u.n]||e.d<first[u.n])first[u.n]=e.d}));
+const av=a=>a.reduce((s,e)=>s+4-e.s,0)/a.length;
+const ch=Object.entries(first).filter(([n,x])=>x>E[0].d).sort((a,b)=>b[1].localeCompare(a[1])).map(([n,x])=>{
+const b=E.filter(e=>e.s&&e.d<x),a=E.filter(e=>e.s&&e.d>=x);let v='<span class="mu">Too early to tell</span>';
+if(b.length>1&&a.length>2){const y=av(b),z=av(a),df=z-y;v=`${y.toFixed(1)} → ${z.toFixed(1)} ${df>.2?'👍':df<-.2?'👎':'➖'}`}
+return `<div class="pc"><b>${esc(n)}</b><span class="mu sm">Started ${fd(x)}</span><div>${v}</div></div>`}).join('');
+const xs=X.map(x=>{const b=E.filter(e=>e.s&&e.d<x.st),a=E.filter(e=>e.s&&e.d>=x.st);let v='<span class="mu">Too early to tell</span>';if(b.length>1&&a.length>2){const y=av(b),z=av(a),df=z-y;v=`${y.toFixed(1)} → ${z.toFixed(1)} ${df>.2?'👍':df<-.2?'👎':'➖'}`}return `<div class="pc"><b>${esc(x.n)}</b><span class="mu sm">${x.s}, started ${fd(x.st)}</span><div>${v}</div></div>`}).join('');
+const cnt={};E.forEach(e=>(e.u||[]).forEach(u=>cnt[u.n]=(cnt[u.n]||0)+1));
+const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1]),mx=top.length?top[0][1]:1;
+const use=top.map(([n,c])=>`<div class="ur"><span>${esc(n)}</span><div><b style="width:${c/mx*100}%"></b></div><em>${c}</em></div>`).join('');
+const nts=E.filter(e=>e.nt).slice(-10).reverse().map(e=>`<div class="pl nt"><b>${fd(e.d)} ${e.slot==='PM'?'🌙':'☀️'}</b><br>${esc(e.nt)}</div>`).join('');
+const grid=E.slice().reverse().map(e=>`<button class="th" data-a="open" data-i="${e.id}">${e.p?`<img src="${e.p}" alt="">`:(SK[e.s||0]||'✓')}<small>${fd(e.d)} ${e.slot==='PM'?'🌙':'☀️'}</small></button>`).join('');
+return `<h1>Progress</h1>${bkCard()}${recCard()}${verseCard()}<div class="stats"><div class="stat"><b>${st}</b><span>Day streak</span></div><div class="stat"><b>${m30}</b><span>Days in 30</span></div><div class="stat"><b>${E.length}</b><span>Entries</span></div></div>
+<h2>Last 14 days</h2><div class="dots">${dots.join('')}</div>
+<h2>Before and after</h2>${ba}
+${bars?`<h2>Skin days</h2>${bars}`:''}
+${ch?`<h2>When products changed <small>Average skin score, 1 to 3 (3 is great)</small></h2>${ch}<p class="mu sm">These are her own ratings before and after. They show a pattern, not proof.</p>`:''}
+${xs?`<h2>Trying new</h2>${xs}`:''}
+${use?`<h2>Products used</h2>${use}`:''}
+${nts?`<h2>Notes</h2>${nts}`:''}
+<h2>All entries</h2><div class="grid">${grid}</div>`}
+function onPhoto(e){const f=e.target.files[0];if(!f)return;const u=URL.createObjectURL(f),im=new Image();
+im.onload=()=>{const k=Math.min(1,720/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);photo=c.toDataURL('image/jpeg',.72);URL.revokeObjectURL(u);e.target.value='';draw()};
+im.onerror=()=>toast('Could not read that photo');im.src=u}
+document.addEventListener('input',e=>{if(e.target.id==='nt')note=e.target.value});
+$('#f').addEventListener('change',onPhoto);$('#f2').addEventListener('change',onPhoto);
+$('#imp').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{const j=JSON.parse(await f.text());if(!Array.isArray(j.E))throw 0;(j.P||[]).forEach(p=>{if(!P.some(q=>q.n===p.n))P.push(p)});saveP();(j.X||[]).forEach(x=>{if(!X.some(q=>q.id===x.id))X.push(x)});saveX();for(const x of j.E||[])await put(x);tab='dash';await load();toast('Recovered '+j.E.length+' entries')}catch(err){toast('That is not a YOJA Care backup')}e.target.value=''});
+async function out(name,type,text){const f=new File([text],name,{type});
+try{if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return true}}catch(e){if(e.name==='AbortError')return false}
+try{const d=window.claude&&await claude.use('downloads');if(d){await d.save({filename:name,data:text});return true}}catch(e){}
+const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=name;a.click();return true}
+document.addEventListener('click',async e=>{
+if(e.target.id==='ov'){$('#ov').classList.remove('show');return}
+const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,i=b.dataset.i;
+if(a==='tab'){tab=i;draw()}
+else if(a==='pick')$('#f').click();
+else if(a==='lib')$('#f2').click();
+else if(a==='nophoto'){photo=null;draw()}
+else if(a==='slot'){cur.slot=i;loadCur();draw()}
+else if(a==='today'){cur={d:dk(new Date()),slot:cur.slot};loadCur();draw()}
+else if(a==='skin'){skin=skin===+i?0:+i;draw()}
+else if(a==='chip'){const c=sel[i];if(c===undefined)sel[i]=1;else if(c===1)sel[i]=2;else if(c===2)sel[i]=0;else delete sel[i];const y=scrollY;draw();scrollTo(0,y)}
+else if(a==='save'){if(!photo&&!skin&&!note.trim()&&!Object.keys(sel).length){toast('Add a photo, skin rating or product first');return}
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(x){}
+const ex=E.find(z=>z.d===cur.d&&z.slot===cur.slot);
+await put({id:ex?ex.id:cur.d+'-'+cur.slot,d:cur.d,slot:cur.slot,t:ex?ex.t:Date.now(),p:photo,s:skin,nt:note.trim(),u:P.filter(p=>sel[p.id]!==undefined).map(p=>({n:p.n,a:AMT[sel[p.id]]}))});
+tab='dash';await load();toast('Saved')}
+else if(a==='add'){const v=$('#pn').value.trim();if(!v)return;if(!P.some(p=>p.n.toLowerCase()===v.toLowerCase())){P.push({id:'p'+Date.now(),n:v});saveP()}draw()}
+else if(a==='quick'){P.push({id:'p'+Date.now(),n:i});saveP();draw()}
+else if(a==='rm'){P=P.filter(p=>p.id!==i);delete sel[i];saveP();draw()}
+else if(a==='bak'){if(await out('yoja-care-backup-'+dk(new Date())+'.json','application/json',JSON.stringify({v:3,P,E,X})))setBk();draw()}
+else if(a==='csv'){const q=c=>'"'+String(c).replace(/"/g,'""')+'"';out('yoja-care-'+dk(new Date())+'.csv','text/csv',['Date,Time of day,Skin,Products,Notes,Photo file'].concat(E.map(e=>[e.d,e.slot==='AM'?'Morning':'Night',['','Great','Okay','Rough'][e.s||0],(e.u||[]).map(u=>u.n+' ('+u.a+')').join('; '),e.nt||'',e.p?e.d+'-'+e.slot+'.jpg':''].map(q).join(','))).join('\n'))}
+else if(a==='pics'){const ph=E.filter(z=>z.p);if(!ph.length){toast('No photos yet');return}
+const b64=d=>{const s=atob(d.split(',')[1]),u=new Uint8Array(s.length);for(let k=0;k<s.length;k++)u[k]=s.charCodeAt(k);return u};
+const fs=ph.map(z=>new File([b64(z.p)],z.d+'-'+z.slot+'.jpg',{type:'image/jpeg'}));
+try{if(navigator.canShare&&navigator.canShare({files:fs}))await navigator.share({files:fs});else toast('Photo sharing is not available here')}catch(x){}}
+else if(a==='vnext'){vo++;draw()}
+else if(a==='xadd'){const v=$('#xn').value.trim();if(!v)return;X.push({id:'x'+Date.now(),n:v,st:dk(new Date()),s:'Trying'});saveX();draw()}
+else if(a==='xst'){const x=X.find(z=>z.id===i);if(x){x.s=({Trying:'Keeping',Keeping:'Dropped',Dropped:'Trying'})[x.s]||'Trying';saveX();draw()}}
+else if(a==='xrm'){X=X.filter(z=>z.id!==i);saveX();draw()}
+else if(a==='txt'){const L=['YOJA CARE NOTES','Saved '+dk(new Date()),'','TRYING NEW'];
+X.forEach(x=>L.push('- '+x.n+' (started '+x.st+', '+x.s+')'));if(!X.length)L.push('- none');
+L.push('','PRODUCTS');P.forEach(p=>L.push('- '+p.n));
+L.push('','DAILY NOTES');E.filter(e=>e.nt).forEach(e=>L.push(e.d+' '+(e.slot==='AM'?'Morning':'Night')+': '+e.nt));
+out('yoja-care-notes-'+dk(new Date())+'.txt','text/plain',L.join('\n'))}
+else if(a==='imp')$('#imp').click();
+else if(a==='open'){const x=E.find(z=>String(z.id)===i);if(!x)return;
+$('#ovc').innerHTML=`${x.p?`<img src="${x.p}" alt="">`:''}<p><b>${new Date(x.d+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'})}, ${x.slot==='AM'?'morning':'night'}</b> ${SK[x.s||0]}</p><p class="mu">${(x.u||[]).length?x.u.map(u=>esc(u.n)+' ('+u.a.toLowerCase()+')').join(', '):'No products logged'}</p>${x.nt?`<p>${esc(x.nt)}</p>`:''}<div class="r"><button data-a="close">Close</button><button data-a="edit" data-i="${x.id}">Edit</button><button class="d" data-a="del" data-i="${x.id}">Delete</button></div>`;$('#ov').classList.add('show')}
+else if(a==='close')$('#ov').classList.remove('show');
+else if(a==='edit'){const x=E.find(z=>String(z.id)===i);if(!x)return;cur={d:x.d,slot:x.slot};loadCur();tab='log';$('#ov').classList.remove('show');draw()}
+else if(a==='del'){const x=E.find(z=>String(z.id)===i);if(x)await del(x.id);$('#ov').classList.remove('show');await load();toast('Deleted')}
+});
+load();
+</script><script>
+(function(){
+var st=navigator.standalone===true||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches),skip=false;
+try{skip=sessionStorage.getItem('sl_skip')==='1'}catch(e){}
+if(st||skip)return;
+var ua=navigator.userAgent,ios=/iPhone|iPad|iPod/i.test(ua),inapp=/FBAN|FBAV|Instagram|Line\/|MicroMessenger|GSA\/|Snapchat|TikTok/i.test(ua);
+var el=document.getElementById('ah');el.classList.add('show');
+if(inapp)document.getElementById('ah-app').style.display='block';
+if(!ios)document.getElementById('ah-dt').style.display='block';
+document.getElementById('ah-add').addEventListener('click',async function(){
+try{if(navigator.share){await navigator.share({title:'YOJA Care',url:location.href});return}}catch(e){if(e&&e.name==='AbortError')return}
+var o=document.getElementById('ah-steps');o.classList.add('hl');o.scrollIntoView({behavior:'smooth',block:'center'})});
+document.getElementById('ah-skip').addEventListener('click',function(){try{sessionStorage.setItem('sl_skip','1')}catch(e){}el.classList.remove('show')});
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(err => console.warn('Offline support unavailable:', err)));
+}
+</script>
+</body></html>
